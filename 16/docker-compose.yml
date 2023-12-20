@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:15
+    ports:
+      - "4569:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - odoo15-db1-data:/var/lib/postgresql/data
+
+  odoo_web_15:
+    image: odoo:17
+    ports:
+      - "9501:8069"
+    volumes:
+      - ./T-box:/T-box
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - odoo15-web-data:/var/lib/odoo
+
+  odoo_web_16:
+    image: odoo:16
+    ports:
+      - "9502:8069"
+    volumes:
+      - ./T-box16:/T-box
+      - ./odoo16.conf:/etc/odoo/odoo.conf
+      - odoo16-web-data:/var/lib/odoo
+
+volumes:
+  odoo15-web-data:
+  odoo16-web-data:
+  odoo15-db1-data:
